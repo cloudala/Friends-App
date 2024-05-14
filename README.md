@@ -10,17 +10,11 @@ Hey there! Welcome to the Friends Detection App 🎉. This nifty tool allows you
 
 2. **Click Submit and Grab a Coffee:** Once you've selected an image, hit that "Submit" button, sit back, and relax. Our AI pals will get to work faster than you can say "How you doin'?".
 
-3. **Enjoy the Results:** Voilà! In no time, we'll present you with the results, showing you which Friends character you've got in your picture-perfect snapshot.
+   ![Submit image](readme_images/submit.jpg)
+   ![Making magic happen](readme_images/progress.jpg)
 
-## Sneak Peek
-
-Take a peek at how the app works in action:
-
-1. ![Screenshot 1](path/to/screenshot_1.png)
-   Caption for screenshot 1.
-
-2. ![Screenshot 2](path/to/screenshot_2.png)
-   Caption for screenshot 2.
+3. **Enjoy the Results:** Voilà! In no time, we'll present you with the results, showing you which Friends character you've got in your picture-perfect snapshot and providing you with a random quote by that person and the episode which it comes from (maybe you'd like to give it a watch? 😉).
+   ![Results](readme_images/result.jpg)
 
 ## Installation
 
@@ -29,4 +23,4 @@ Want to try it out yourself? Follow these easy steps:
 1. **Clone the Repository:**
 
    ```bash
-   git clone https://github.com/yourusername/friends-detection-app.git
+   git clone https://github.com/cloudala/Friends-Detection-App.git
