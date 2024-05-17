@@ -4,9 +4,9 @@ import tensorflow as tf
 from matplotlib import pyplot as plt
 from tensorflow.keras.models import load_model
 
-friends_model = load_model('friends_100.keras')
+friends_model = load_model('friends_50.keras')
 
-img = cv2.imread('rachel (38).jpg')
+img = cv2.imread('rachel.jpg')
 plt.imshow(img)
 plt.show()
 

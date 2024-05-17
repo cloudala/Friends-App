@@ -1,17 +1,12 @@
-# Restart flask server on save: flask run --reload
 import cv2
 import base64
 import numpy as np
-import matplotlib.pyplot as plt
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from neo4j import GraphDatabase, basic_auth
 from dotenv import load_dotenv
 import tensorflow as tf
-import logging
 from tensorflow.keras.models import load_model
-import sys
-# Allows us to access environmental variables
 import os
 
 friends_model = load_model('friends_100.keras')
@@ -22,19 +17,13 @@ uri = os.getenv("URI")
 username = os.getenv("USER")
 password = os.getenv("PASSWORD")
 
-# Logging for debugging connection with Neo4j Aura
-# handler = logging.StreamHandler(sys.stdout)
-# handler.setLevel(logging.DEBUG)
-# logging.getLogger("neo4j").addHandler(handler)
-# logging.getLogger("neo4j").setLevel(logging.DEBUG)
-
-# Creating a neo4j driver with custom SSL context options
+# Creating a neo4j driver
 driver = GraphDatabase.driver(uri, auth=basic_auth(username, password), database="neo4j")
 
 app = Flask(__name__)
 CORS(app)
 
-# Getting all employees
+# Getting a random quote by a given character
 def get_quote(tx, name):
     query = """
             WITH timestamp() AS currentTimestamp
@@ -46,6 +35,7 @@ def get_quote(tx, name):
             """
     return tx.run(query, name=name).data()[0]
 
+# Endpoint for getting a random quote
 @app.route("/quote", methods = ["GET"])
 def get_quote_route():
     with driver.session() as session:
@@ -53,6 +43,7 @@ def get_quote_route():
     response = quote
     return jsonify(response), 200
 
+# Endpoint for classifying the character and getting a random quote
 @app.route('/classify', methods=['POST'])
 def classify_image():
     # Receive Base64-encoded image data from the request
@@ -67,15 +58,8 @@ def classify_image():
     
     # Decode the image array using OpenCV
     image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-    
-    # # Display the image for debugging purposes
-    # plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
-    # plt.axis('off')
-    # plt.show()
 
     resize = tf.image.resize(image, (256,256))
-    # plt.imshow(resize.numpy().astype(int))
-    # plt.show()
 
     prediction = friends_model.predict(np.expand_dims(resize/255, 0))[0]
     class_labels = ['Chandler', 'Joey', 'Monica', 'Phoebe', 'Rachel', 'Ross']
@@ -105,6 +89,5 @@ def classify_image():
         "quote": quote
     })
 
-# Running our app (provided its the main programme and isn't imported as a module)
 if __name__ == "__main__":
     app.run()

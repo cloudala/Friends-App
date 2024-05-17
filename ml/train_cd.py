@@ -4,8 +4,9 @@ from tensorflow.keras.utils import image_dataset_from_directory
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Dense, Flatten, Dropout
 from tensorflow.keras.callbacks import ModelCheckpoint
+from tensorflow.keras.models import load_model
 
-data = image_dataset_from_directory('data2')
+data = image_dataset_from_directory('data')
 data = data.map(lambda x,y: (x/255, y))
 data.as_numpy_iterator().next()
 
@@ -22,48 +23,7 @@ train_data = data.take(num_train_samples)
 validation_data = data.skip(num_train_samples).take(num_validation_samples)
 test_data = data.skip(num_train_samples + num_validation_samples).take(num_test_samples)
 
-# Display a few images from each set
-fig, ax = plt.subplots(ncols=4, nrows=3, figsize=(20, 15))
-
-# Plot images from train set
-for idx, (images, labels) in enumerate(train_data.take(4)):
-    for i in range(len(images)):
-        ax[0, idx].imshow(images[i].numpy())
-        ax[0, idx].set_title("Train: " + str(labels[i].numpy()))
-        ax[0, idx].axis("off")
-        break  # Show only the first image from each batch
-
-# Plot images from validation set
-for idx, (images, labels) in enumerate(validation_data.take(4)):
-    for i in range(len(images)):
-        ax[1, idx].imshow(images[i].numpy())
-        ax[1, idx].set_title("Validation: " + str(labels[i].numpy()))
-        ax[1, idx].axis("off")
-        break
-
-# Plot images from test set
-for idx, (images, labels) in enumerate(test_data.take(4)):
-    for i in range(len(images)):
-        ax[2, idx].imshow(images[i].numpy())
-        ax[2, idx].set_title("Test: " + str(labels[i].numpy()))
-        ax[2, idx].axis("off")
-        break
-
-plt.show()
-
-model = Sequential()
-model.add(Conv2D(16, (3,3), 1, activation='relu', input_shape=(256,256,3)))
-model.add(MaxPooling2D())
-model.add(Conv2D(32, (3,3), 1, activation='relu'))
-model.add(MaxPooling2D())
-model.add(Conv2D(16, (3,3), 1, activation='relu'))
-model.add(MaxPooling2D())
-model.add(Flatten())
-model.add(Dense(256, activation='relu'))
-model.add(Dense(6, activation='softmax'))
-model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-
-print(model.summary())
+model = load_model('friends_100.keras')
 
 # plot diagnostic learning curves
 def summarize_diagnostics(history):
@@ -92,7 +52,7 @@ def summarize_diagnostics(history):
 checkpoint_path_keras = '{epoch:02d}-{val_accuracy:.2f}.keras'
 checkpoint_keras = ModelCheckpoint(checkpoint_path_keras, monitor='val_loss', verbose=1, save_best_only=True, mode='min')
 
-history = model.fit(train_data, validation_data=validation_data, epochs=20, verbose=1, callbacks = [checkpoint_keras])
+history = model.fit(train_data, validation_data=validation_data, epochs=10, verbose=1, callbacks = [checkpoint_keras])
 
 summarize_diagnostics(history)
 
