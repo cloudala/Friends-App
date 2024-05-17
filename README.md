@@ -24,3 +24,48 @@ Want to try it out yourself? Follow these easy steps:
 
    ```bash
    git clone https://github.com/cloudala/Friends-Detection-App.git
+
+2. **Install Python Requirements:**
+   Navigate into the cloned repository and install the required Python packages using pip:
+   ```bash
+   cd Friends-Detection-App
+   pip install -r requirements.txt
+
+3. **Run Neo4j Docker Image:**
+   Start the latest Neo4j Docker image by running the following command:
+   ```docker
+   docker run --name myneo4j -p 7474:7474 -p 7687:7687  -v friends_detection_data:/data -d neo4j
+
+4. **Populate the Database:**
+   Open the Neo4j browser editor (once you've run the container it will be available at http://localhost:7474) and execute the following Cypher query to populate the database:
+   ```cypher
+   LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/cloudala/Friends-Detection-App/main/db_data/friends_quotes_after_cleanup.csv' AS row
+   MERGE (author:Author {name: row.author})
+   WITH author, row
+   CREATE (quote:Quote {
+      episode_number: toInteger(row.episode_number),
+      episode_title: row.episode_title,
+      quote: row.quote,
+      season: toInteger(row.season)
+   })
+   CREATE (author)-[:HAS_QUOTE]->(quote)
+
+5. **Run the Server:**
+   Navigate into the server folder and run the Flask server:
+   ```bash
+   cd server
+   python app.py
+
+6. **Install Client Dependencies:**
+   Open a different terminal, navigate into the client folder and install the necessary requirements:
+   ```bash
+   cd client
+   npm install
+
+7. **Run the Client:**
+   Run the client app:
+   ```bash
+   npm run dev
+
+7. **Enjoy the App:**
+  Open your browser and go to http://localhost:3000 to enjoy the app 😊!
