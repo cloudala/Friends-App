@@ -1,3 +1,4 @@
 ml/data/
 ml/*.keras
 episode_text_analysis/episode_analysis/
+__pycache__/
