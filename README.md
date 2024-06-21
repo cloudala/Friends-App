@@ -1,6 +1,11 @@
 # Friends Detection App
 
-Hey there! Welcome to the Friends Detection App 🎉. This nifty tool allows you to detect your favorite characters from the iconic '90s sitcom Friends using some cool machine learning magic.
+Hey there! Welcome to the Friends App 🎉 - a combination of two tools, which will entertain any fan of the series. 
+   ![Main Page](readme_images/main_page.jpg)
+   ![Episodes Page](readme_images/episodes_page.jpg)
+
+## Tool 1 - Friends Detection
+Visit the 'Classify Friend' subpage to try out this nifty tool. It allows you to detect your favorite characters from the iconic '90s sitcom Friends using some cool machine learning magic.
 
 ## How to Use
 
@@ -15,6 +20,15 @@ Hey there! Welcome to the Friends Detection App 🎉. This nifty tool allows you
 
 3. **Enjoy the Results:** Voilà! In no time, we'll present you with the results, showing you which Friends character you've got in your picture-perfect snapshot and providing you with a random quote by that person and the episode which it comes from (maybe you'd like to give it a watch? 😉).
    ![Results](readme_images/result.jpg)
+
+## Tool 2 - Content-Based Friends Episode Recommendation System
+Visit the 'Episodes' subpage to try out this fun utility. It shows you episodes of the series along with 10 of their most prominent topics (tags) and their sentiment - joy 🥳, surprise 😲, sadness 😔, neutral 😐, fear 😨, anger 😡, disgust 🤢. Click on any episode you fancy to see 10 most similar episodes chosen with some Natural Language Processing Wizardry!
+   ![Episodes Page](readme_images/episodes_page.jpg)
+   ![Episodes Page 1](readme_images/episode_page_1.jpg)
+   ![Episodes Page 2](readme_images/episode_page_2.jpg)
+   ![Episodes Page 3](readme_images/episode_page_3.jpg)
+   ![Episodes Page 4](readme_images/episode_page_4.jpg)
+   ![Episodes Page 5](readme_images/episode_page_5.jpg)
 
 ## Installation
 
